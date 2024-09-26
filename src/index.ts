@@ -1,6 +1,18 @@
-import { Hono } from 'hono'
-const app = new Hono()
+import { Hono } from "hono";
 
-app.get('/', (c) => c.text('Hello Cloudflare Workers!'))
+const app = new Hono
 
-export default app
+app.get('/',(c) =>{
+  return c.text('Hello Hono!')
+})
+
+app.get('/api', (c) =>{
+  return  c.json({ message: 'Hello Hono!'})
+})
+
+app.get('/api/Hello/:name', (c) =>{
+  const name = c.req.param('name')
+  return c.text(`Hello, ${name}!`)
+})
+
+export default app;
