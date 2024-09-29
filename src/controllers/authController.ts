@@ -1,3 +1,5 @@
+import { loginUser, registerUser } from "../services/authService";
+
 export const register = async (req: Request, res: Response) => {
     const {name, email, password} = req.body;
     try {
