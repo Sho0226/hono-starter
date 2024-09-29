@@ -1,12 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 import { generateToken } from "../utils/jwt";
+import bcrypt from 'bcryptjs';
+
 
 const prisma = new PrismaClient();
 
 export const registerUser = async(name:string, email: string,password:string) =>{
     const hashedPassword = await bcrypt.hash(password,10)
     return prisma.user.create({
-        data:{name,email.password:hashedPassword}
+        data:{name,email,password:hashedPassword}
     })
 }
 

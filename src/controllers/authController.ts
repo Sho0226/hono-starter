@@ -1,21 +1,22 @@
+import { Context } from "hono";
 import { loginUser, registerUser } from "../services/authService";
 
-export const register = async (req: Request, res: Response) => {
-    const {name, email, password} = req.body;
+export const register = async (c: Context) => {
+    const {name, email, password} = await c.req.json();
     try {
         const user = await registerUser(name, email, password);
-        res.status(201).json(user);
+        return c.json(user,201)
     }catch (error){
-        res.status(400).json({message: 'Registration failed'})
+        return c.json({ message: 'Registration failed' }, 400);
     }
 };
 
-export const login = async (req: Request, res: Response) => {
-    const {email, password} = req.body;
+export const login = async (c: Context) => {
+    const {email, password} = await c.req.json();
     try{
         const token = await loginUser(email,password);
-        res.status(200).json({token})
+       return c.json({token},200)
     }catch(error){
-        res.status(401).json({message:'Login failed'})
+        return c.json({message: 'Login failed'},401);
     }
 };

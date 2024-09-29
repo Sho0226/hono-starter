@@ -1,7 +1,11 @@
-import { Jwt } from "hono/utils/jwt"
+import jwt from 'jsonwebtoken';
 
-const SECRET_KEY = process.env.JWT_SECRET || 'default_secret'
+const SECRET_KEY = process.env.JWT_SECRET || 'default_secret';
 
 export const generateToken = (userId: number) => {
-    return Jwt.sign({userId},SECRET_KEY,{expiresIn: '1h'})
+  return jwt.sign({ userId }, SECRET_KEY, { expiresIn: '1h' });
+};
+
+export const verifyToken = (token: string) => {
+  return jwt.verify(token, SECRET_KEY);
 };
